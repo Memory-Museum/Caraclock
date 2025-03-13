@@ -1,9 +1,11 @@
+#source: https://github.com/adafruit/Adafruit_CircuitPython_ADS1x15 
+
 import time
 import board
 import busio
 import adafruit_ads1x15.ads1015 as ADS
 from adafruit_ads1x15.analog_in import AnalogIn
-from gpiozero import Button 
+#from gpiozero import Button 
 
 # Create the I2C bus
 i2c = busio.I2C(board.SCL, board.SDA)
@@ -17,17 +19,9 @@ chan1 = AnalogIn(ads, ADS.P1)
 chan2 = AnalogIn(ads, ADS.P2)
 
 
-# Create differential input between channel 0 and 1
-#chan = AnalogIn(ads, ADS.P0, ADS.P1)
-
 print("{:>5}\t{:>5}".format('raw', 'v'))
 
 while True:
-    print("Buttons")
-    start.wait_for_press()
-    print("Start, pin 13 was pushed")
-    reset.wait_for_press()
-    print("reset, pin 15 was pushed")
 
     print("__________________")
 
