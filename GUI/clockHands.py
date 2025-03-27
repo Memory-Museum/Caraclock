@@ -1,5 +1,7 @@
 # Tutorial source: https://www.youtube.com/watch?v=vs6uEFpStuY 
 # edited by Belen
+# we are not using this version anymore as we decided to use a digital clock
+
 
 import tkinter as tk
 from datetime import datetime
