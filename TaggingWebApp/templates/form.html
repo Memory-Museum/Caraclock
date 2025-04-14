@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Caraclock GUI</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        img {
+            max-width: 500px;
+            max-height: 500px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        #controls {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input, textarea {
+            width: 250px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tag Photos</h1>
+    <h3>1) Select the folder of photos to browse</h3>
+
+    <input type="file" id="folderInput" webkitdirectory multiple>
+
+    <div class="container">
+        <img id="preview" src="" alt="No image selected">
+
+        <form id="tagForm">
+            <label for="who">Who is in the picture?(separe with commas)</label>
+            <input type="text" id="who" name="who">
+
+            <label for="when">What year was it taken?</label>
+            <input type="text" id="when" name="when" placeholder="YYYY">
+
+            <label for="where">Where was it taken?</label>
+            <textarea id="where" name="where" rows="3"></textarea>
+
+            <label for="caption">Anything special about this picture?</label>
+            <textarea id="where" name="where" rows="3"></textarea>
+        </form>
+    </div>
+
+    <div id="controls">
+        <button id="backBtn">Back</button>
+        <button id="nextBtn">Next</button>
+        <button id="saveBtn">Save Tags as JSON</button>
+        <button id="GotoRM">Go to Relationship Manager</button>
+
+    </div>
+   
+
+    <script>
+        const folderInput = document.getElementById('folderInput');
+        const preview = document.getElementById('preview');
+        const backBtn = document.getElementById('backBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const tagForm = document.getElementById('tagForm');
+        const gotoRM = document.getElementById('GotoRM');
+
+        let imageFiles = [];
+        let currentIndex = 0;
+        let tagData = {};
+
+        folderInput.addEventListener('change', () => {
+            imageFiles = Array.from(folderInput.files).filter(file => file.type.startsWith('image/'));
+            if (imageFiles.length > 0) {
+                currentIndex = 0;
+                showImage(currentIndex);
+                loadFormData();
+            } else {
+                preview.src = '';
+                preview.alt = 'No image selected';
+            }
+        });
+
+        backBtn.addEventListener('click', () => {
+            saveFormData();
+            if (imageFiles.length > 0) {
+                currentIndex = (currentIndex - 1 + imageFiles.length) % imageFiles.length;
+                showImage(currentIndex);
+                loadFormData();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            saveFormData();
+            if (imageFiles.length > 0) {
+                currentIndex = (currentIndex + 1) % imageFiles.length;
+                showImage(currentIndex);
+                loadFormData();
+            }
+        });
+
+        gotoRM.addEventListener('click', ()=>{
+            window.location.href = "{{ url_for('relationship_manager') }}";
+        });
+
+        const saveBtn = document.getElementById('saveBtn');
+
+saveBtn.addEventListener('click', () => {
+    saveFormData(); 
+    saveToLocalJSON();
+});
+
+
+        function showImage(index) {
+            const file = imageFiles[index];
+            const reader = new FileReader();
+            reader.onload = e => {
+                preview.src = e.target.result;
+                preview.alt = file.name;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function saveFormData() {
+            const file = imageFiles[currentIndex];
+            if (!file) return;
+            tagData[file.name] = {
+                who: document.getElementById('who').value,
+                when: document.getElementById('when').value,
+                where: document.getElementById('where').value,
+            };
+        }
+
+        function loadFormData() {
+            const file = imageFiles[currentIndex];
+            const data = tagData[file.name] || {};
+            document.getElementById('who').value = data.who || '';
+            document.getElementById('when').value = data.when || '';
+            document.getElementById('where').value = data.where || '';
+        }
+
+        function saveToLocalJSON() {
+            const blob = new Blob([JSON.stringify(tagData, null, 2)], { type: "application/json" });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = "photo_tags.json";
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+    </script>
+</body>
+</html>

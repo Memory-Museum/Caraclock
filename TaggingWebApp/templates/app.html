@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- this line adds the icon that we see in the image of the website tab-->
+         <!-- this line connects the html file and the css file that is located in the same directory--> 
+        <title>Caraclock GUI</title>
+        <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+        <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+    
+    </head>
+
+    
+<body>
+
+ <!-- logo goes in the body section-->
+ <div class="site-logo">
+    <img src="{{ url_for('static', filename='turtlew.gif') }}" alt="logo" class="logo">
+</div>
+
+    <div class="header-text">
+<p>Prepare the photos you want to display in your Caraclock following these 3 simple steps:</p>
+     </div>
+    
+ <div class= "square-containers"> 
+    <div class= "square">
+        <p> <b>1.</b></p>
+        <p><b> Upload photos</b></p>
+    </div>
+
+    <div class="arrow">
+        <img src="{{ url_for('static', filename='arrow.png') }}" alt="arrow">
+    </div>
+
+ <div class= "square">
+    <p><b>2.</b></p>
+    <p><b>Tag photos</b></p>
+</div>
+
+<div class="arrow">
+    <img src="{{ url_for('static', filename='arrow.png') }}" alt="arrow">
+</div>
+
+<div class= "square">
+    <p><b>3.</b></p>
+    <p><b>Model interpersonal relationships</b></p>
+</div>
+
+</div>
+<a href="{{url_for('form')}}" class="action-button" id="startButton">Start Now</a>
+
+</body>
+ 
+<footer>
+    <p>Made with love by Memory Museum Group </p>
+  </footer>
+
+</html> 
+
