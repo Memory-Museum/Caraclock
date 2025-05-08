@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Relationship Manager</title>
 
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+      font-family: sans-serif;
+    }
+  </style>
+</head>
+
+<body>
   <h1>Relationship Manager</h1>
 
   <h3>Step 1</h3>
@@ -14,28 +24,18 @@
     <input type="submit" value="Go to Step 2">
   </form>
 
-  <style>
-    body {
-      padding: 0;
-      margin: 0;
-    }
-  </style>
-   <script src="{{ url_for('static', filename='RelationshipManager_p5_.js') }}" defer></script>
-</head>
-
-<body>
   <script>
     document.getElementById("familyForm").addEventListener("submit", function(event) {
-      event.preventDefault(); // Prevent default form submission
+      event.preventDefault();
       
       let names = document.getElementById("fnames").value.trim();
       if (names) {
-       // Store in localStorage
-        localStorage.setItem("familyNames", JSON.stringify(names));
-        
-        loadScript("libraries/p5.min.js", function() {
-          loadScript("RelationshipManager_p5_.js", function() {
-            console.log("Scripts loaded, names saved.");
+        localStorage.setItem("familyNames", names);
+
+        // Load p5.js and your sketch
+        loadScript("/static/libraries/p5.min.js", function() {
+          loadScript("/static/RelationshipManager_p5_.js", function() {
+            console.log("Scripts loaded.");
           });
         });
       } else {

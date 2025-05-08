@@ -7,6 +7,10 @@ app = Flask(__name__)
 def home():
     return render_template('app.html')
 
+@app.route('/user')
+def user():
+    return render_template('user_name.html')
+
 @app.route('/form', methods=['GET','POST'])
 def form():
     return render_template('form.html')
