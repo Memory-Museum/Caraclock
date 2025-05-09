@@ -2,22 +2,53 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style-name.css') }}">
     <title>Caraclock GUI</title>
-
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
 
 </head>
-
 <body>
-    <p>Form </p>
+    <div class="logo-container">
+        <img src="{{ url_for('static', filename='logo3.png') }}" alt="logo" style="width: 150px; height: auto;">
+    </div>
 
-    <form id="tagForm">
-        <label>What is your name? </label>
-        <input type="text" id="who" name="who"placeholder ="Jhon Doe">
+    <div class="page-container">
+        <main class="main-content">
+            <p><b>1) Tell us about yourself</b></p>
+            <div class="form-wrapper">
+                <form id="tagForm">
+                    <label for="who">Enter username</label>
+                    <input type="text" id="who" name="who" placeholder="username">
 
+                    <label for="when">Enter user birthyear</label>
+                    <input type="text" id="when" name="when" placeholder="YYYY">
+                    
+                    <p id="errorMessage" class="error-message"></p>
 
-        <label>What is your birth year?</label>
-        <input type="text" id="when" name="when" placeholder="YYYY">
-      
-    </form>
+                    <button type="button" class="action-button" id="startButton">Next</button>
+                </form>
+            </div>
+        </main>
+        <footer class="footer">
+            <p>By Memory Museum Group</p>
+        </footer>
+    </div>
 
+    <script>
+    document.getElementById("startButton").addEventListener("click", function(event) {
+        const name = document.getElementById("who").value.trim();
+        const birthYear = document.getElementById("when").value.trim();
+        const errorMessage = document.getElementById("errorMessage");
+
+        if (!name || !birthYear) {
+            errorMessage.textContent = "Please fill out both fields.";
+        } else if (!/^\d{4}$/.test(birthYear)) {
+            errorMessage.textContent = "Please enter a valid birth year.";
+        } else {
+            errorMessage.textContent = "";
+            window.location.href = "{{ url_for('form') }}";
+        }
+    });
+    </script>
 </body>
+</html>

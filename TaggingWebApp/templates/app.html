@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <!-- this line adds the icon that we see in the image of the website tab-->
-         <!-- this line connects the html file and the css file that is located in the same directory--> 
         <title>Caraclock GUI</title>
         <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style-app.css') }}">
@@ -22,8 +20,6 @@
             </div>
             
             <div class="square-containers">
-            
-
                 <div class= "square-containers"> 
                     <div class= "square">
                         <p> <b>1.</b></p>
@@ -56,11 +52,10 @@
                     <p><b>4.</b></p>
                     <p><b>Model interpersonal relationships</b></p>
                 </div>
-                
                 </div>
             </div>
     
-            <a href="{{url_for('form')}}" class="action-button" id="startButton">Start Now</a>
+            <a href="{{url_for('user')}}" class="action-button" id="startButton">Start Now</a>
         </main>
     
         <footer class="footer">
