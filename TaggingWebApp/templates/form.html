@@ -7,7 +7,11 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style-tag.css') }}">
 </head>
 <body>
-    <h1>Tag Photos</h1>
+    <div class="logo-container">
+        <img src="{{ url_for('static', filename='logo3.png') }}" alt="logo" style="width: 150px; height: auto;">
+    </div>
+    
+    <h1>2) Tag Photos</h1>
     <h3>1) Select the folder of photos to browse</h3>
 
     <input type="file" id="folderInput" webkitdirectory multiple>
@@ -37,6 +41,10 @@
         <button id="GotoRM">Go to Relationship Manager</button>
 
     </div>
+
+    <footer class="footer">
+        <p>By Memory Museum Group</p>
+    </footer>
    
 
     <script>
